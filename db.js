@@ -13,7 +13,3 @@ function readAll(dbName, collectionName, callback) {
         });
     });
 };
-
-readAll("kk", "k5", (data) => {console.log(data)});
-
-
