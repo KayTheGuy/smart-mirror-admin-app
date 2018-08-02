@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/kayhandehghani/smart_mirror_admin_app#readme",
   "dependencies": {
+    "assert": "^1.4.1",
     "mongodb": "^3.1.1"
   }
 }
