@@ -4,7 +4,6 @@ import './App.css';
 class App extends Component {
   state = {
     response: '',
-    loading: true
   };
 
   componentDidMount() {
@@ -12,9 +11,9 @@ class App extends Component {
   }
     
   callApi = async () => {
-    fetch('/api/test')
+    fetch('forms/type')
       .then(response => { return response.json(); })
-      .then(myJson => { this.setState({ response: myJson.a}); })
+      .then(myJson => { this.setState({ response: myJson[0]._id}); })
       .catch(err => { console.log(err); });
   }
 
