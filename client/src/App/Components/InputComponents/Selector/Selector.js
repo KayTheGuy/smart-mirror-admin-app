@@ -85,9 +85,9 @@ class Selector extends Component  {
           <div
             className="dropdown-menu"
             aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" >News</a>
-            <a className="dropdown-item" >Event</a>
-            <a className="dropdown-item" >Information</a>
+            <a onClick={() => {this.props.handleSelection("news")}} className="dropdown-item" >News</a>
+            <a onClick={() => {this.props.handleSelection("event")}} className="dropdown-item" >Event</a>
+            <a onClick={() => {this.props.handleSelection("info")}} className="dropdown-item" >Information</a>
           </div>
         </div>
       );

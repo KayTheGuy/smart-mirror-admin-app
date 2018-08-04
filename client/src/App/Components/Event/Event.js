@@ -1,33 +1,17 @@
 import React, {Component} from 'react';
 import './Event.css';
-import EventForm from './EventForm'
+import Date from "../InputComponents/Date/Date"
+
 
 class Event extends Component {
 
   render() {
-    const fields = [
-      {
-        label: 'Event Title',
-        input: <input className="event-title" type="text" placeholder="Insert Event Title" />
-
-      },
-      {
-        label: 'Event Description',
-        input: <input className="event-title" type="text" placeholder="Insert Event Title" />
-
-      }
-    ]
     return (
+      <div className="event-page">
+    <Date/>
+  </div>
+  )
 
-      <EventForm
-        fields={fields}
-        submitLabel="Submit"
-        resetLabel="Clear"
-        onSubmit={({values}) => console.warn(values)}
-      />
-
-  
-    )
   }
 }
 
