@@ -23,9 +23,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">Some header here...</header>
           <p className="App-intro">{this.state.response}</p>
-
             <AdminPage/>
-          
         </div>
       );
   }
