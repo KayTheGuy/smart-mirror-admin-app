@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import AdminPage from './Container/AdminPage/AdminPage'
+import AdminPage from './Components/AdminPage/AdminPage'
 
 class App extends Component {
   state = {
@@ -22,7 +22,6 @@ class App extends Component {
       return (
         <div className="App">
           <header className="App-header">Some header here...</header>
-          <p className="App-intro">{this.state.response}</p>
             <AdminPage/>
         </div>
       );

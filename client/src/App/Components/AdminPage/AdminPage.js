@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Selector from "../../Components/InputComponents/Selector/Selector";
+import Selector from "../../Components/Selector/Selector";
 import Event from "../../Components/Event/Event"
 
 class AdminPage extends Component {
