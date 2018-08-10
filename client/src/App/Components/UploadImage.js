@@ -17,6 +17,10 @@ class UploadImage extends React.Component {
     render = () => {
         let imageSize = 52428800;
         let imageExts = ['.jpg', '.gif', '.png', '.gif'];
+        let style = {
+            'background-color': 'black',
+            'color': '#eba023'
+        }
         return (
             <ImageUploader
                 withIcon={true}
@@ -24,6 +28,7 @@ class UploadImage extends React.Component {
                 onChange={this.onDrop}
                 imgExtension={imageExts}
                 maxFileSize={imageSize}
+                buttonStyles={style}
                 label={`
                     Max Image Size:
                     ${Math.floor(imageSize/1000000)} MB
