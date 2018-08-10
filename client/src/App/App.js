@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Components/Header';
-import Event from './Components/Event';
-import News from './Components/News';
-import Info from './Components/Info';
+import Form from './Components/Form';
 
 class App extends Component {
 	state = {
@@ -11,7 +9,7 @@ class App extends Component {
 	};
 
 	componentDidMount = () => {
-		this.callApi();
+		// this.callApi();
 	}
 
 	formHandler = (formType) => {
@@ -26,16 +24,28 @@ class App extends Component {
 	}
 
 	render = () => {
-		let form = <Event/>
+		let formAttributes = {
+			header: 'event',
+			imageUploader: true,
+			fields: ['title', 'description', 'location', 'date']
+		}
 		if (this.state.form === 'news') {
-			form = <News/>;
+			formAttributes = {
+				header: 'news',
+				imageUploader: true,
+				fields: ['title', 'description', 'date']
+			}
 		} else if (this.state.form === 'info') {
-			form = <Info/>;
+			formAttributes = {
+				header: 'info',
+				imageUploader: false,
+				fields: ['title', 'description']
+			}
 		}
 		return (
 			<div className="app">
 				<Header formHandler={this.formHandler}/>
-				{form}
+				<Form formAttributes={formAttributes}/>
 			</div>
 		);
 	}
