@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
-import AdminPage from './Components/AdminPage/AdminPage'
+import Header from './Components/Header'
+import Event from './Components/Event'
 
 class App extends Component {
   state = {
     response: '',
+    form: ''
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.callApi();
+  }
+
+  formHandler = () => {
+    this.setState({form: 'event'});
+    return (<Event/>);
   }
 
   callApi = async () => {
@@ -18,12 +25,17 @@ class App extends Component {
       .catch(err => { console.log(err); });
   }
 
-  render() {
-      return (
-        <div className="App">
-            <AdminPage/>
-        </div>
-      );
+  render = () => {
+    let form = <div></div>;
+    if (this.state.form === 'event') {
+      form = <Event/>;
+    }
+    return (
+      <div className="app">
+          <Header formHandler={this.formHandler}/>
+          {form}
+      </div>
+    );
   }
 }
 

@@ -2,20 +2,19 @@ import React from 'react';
 import ImageUploader from 'react-images-upload';
 
 class UploadImage extends React.Component {
-
     constructor(props) {
         super(props);
          this.state = { pictures: [] };
          this.onDrop = this.onDrop.bind(this);
     }
 
-    onDrop(picture) {
+    onDrop = (picture) => {
         this.setState({
             pictures: this.state.pictures.concat(picture),
         });
     }
 
-    render() {
+    render = () => {
         let imageSize = 52428800;
         let imageExts = ['.jpg', '.gif', '.png', '.gif'];
         return (
