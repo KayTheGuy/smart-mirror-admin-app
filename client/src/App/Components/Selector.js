@@ -33,9 +33,9 @@ class Selector extends Component  {
 
 	render = () => {
 		return (
-			<div className={`dropdown ${this.state.show ? 'show' : ''}`} ref={(dropdown) => this.dropdown = dropdown}>
+			<span className={`dropdown ${this.state.show ? 'show' : ''}`} ref={(dropdown) => this.dropdown = dropdown}>
 			<button
-				className="btn btn-secondary dropdown-toggle"
+				className="dropdown-toggle"
 				type="button"
 				id="dropDownMenuButton"
 				data-toggle="dropdown"
@@ -44,14 +44,14 @@ class Selector extends Component  {
 				onClick={this.toggleDropdown}>
 				Select Form
 			</button>
-			<div
+			<span
 				className="dropdown-menu"
 				aria-labelledby="dropDownMenuButton">
 				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >News</a>
 				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >Event</a>
 				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >Info</a>
-			</div>
-			</div>
+			</span>
+			</span>
 		);
 	}
 }

@@ -1,1 +1,57 @@
+@font-face {
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 100;
+    src: local("Nunito"), url("./App/fonts/Nunito-Regular.ttf") format("truetype");
+}
 
+* {
+    font-family: Nunito, Verdana, Geneva, sans-serif;
+}
+
+.event-page {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.header {
+    height: 70px;
+    text-align: center;
+    background-color: black;
+    -webkit-box-shadow: 5px 0px 3px #eba023;
+    -moz-box-shadow: 5px 0px 3px #eba023;
+    box-shadow: 0px 3px 10px #eba023;
+}
+
+.content {
+    margin-top: 40px;
+}
+
+.logo {
+    float: left;
+    margin: 10px;
+    height: 50px;
+    width: auto;
+} 
+
+.dropdown {
+    top: 15px;
+}
+
+.dropdown-toggle {
+    margin-left: -100px;
+    border: none;
+    color: #eba023;
+    font-size: 120%;
+    background-color: black;
+}
+
+.dropdown-menu.show {
+    background-color: black;
+    color: #eba023;
+}
+
+.dropdown-toggle:active,  .dropdown-toggle:focus{
+    outline: none !important;
+    box-shadow: none;
+}

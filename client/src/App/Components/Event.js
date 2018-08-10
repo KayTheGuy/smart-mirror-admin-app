@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './Event.css';
 import UploadImage from './UploadImage'
 import {FormGroup, ControlLabel, FormControl, Grid, Row, Col} from 'react-bootstrap';
 
@@ -7,7 +6,7 @@ class Event extends Component {
 	render() {
 		let currentDate = new Date();
 		return (
-			<div className="event-page">
+			<div className="content">
 				<Grid>
 					<Row className="show-grid">
 					<Col xs={1} md={2}></Col>
