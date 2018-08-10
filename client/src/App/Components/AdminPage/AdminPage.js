@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import Selector from "../../Components/Selector/Selector";
+import React, {Component} from 'react'
+import Selector from "../../Components/Selector/Selector"
 import Event from "../../Components/Event/Event"
+import './AdminPage.css'
 
 class AdminPage extends Component {
 
@@ -30,7 +31,9 @@ class AdminPage extends Component {
   render = () => {
     return (
       <div className="Admin-page">
-        <Selector handleSelection={this.handleSelection.bind(this)}/>
+        <header className="App-header">
+          <Selector handleSelection={this.handleSelection}/>
+        </header>
         {this.renderForm()}
       </div>
     );
