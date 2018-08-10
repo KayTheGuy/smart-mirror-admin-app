@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import UploadImage from './UploadImage'
 import {FormGroup, ControlLabel, FormControl, Grid, Row, Col} from 'react-bootstrap';
 
-class Event extends Component {
+class Info extends Component {
 	render() {
 		let currentDate = new Date();
 		return (
@@ -11,7 +11,7 @@ class Event extends Component {
 					<Row className="show-grid">
 					<Col xs={1} md={2}></Col>
 					<Col xs={10} md={8}>
-						<h3>Event</h3>
+						<h3>Info</h3>
 						<br/>
 						<br/>
 						<FormGroup controlId="eventTitle">
@@ -24,15 +24,6 @@ class Event extends Component {
 						<FormControl componentClass="textarea" placeholder="Insert Description..." />
 						</FormGroup>
 
-						<FormGroup controlId="eventLocation">
-						<ControlLabel>Location</ControlLabel>
-						<FormControl componentClass="textarea" placeholder="Insert location..." />
-						</FormGroup>
-
-						<FormGroup controlId="eventDateAndTime">
-						<ControlLabel>Date & Time</ControlLabel>
-						<FormControl componentClass="textarea" placeholder={currentDate.toLocaleString()} />
-						</FormGroup>
 						<UploadImage/>
 					</Col>
 					<Col xs={1} md={2}></Col>
@@ -43,4 +34,4 @@ class Event extends Component {
 	}
 }
 
-export default Event;
+export default Info;

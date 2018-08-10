@@ -47,9 +47,9 @@ class Selector extends Component  {
 			<span
 				className="dropdown-menu"
 				aria-labelledby="dropDownMenuButton">
-				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >News</a>
+				<a onClick={() => {this.props.formHandler('news')}} className="dropdown-item" >News</a>
 				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >Event</a>
-				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >Info</a>
+				<a onClick={() => {this.props.formHandler('info')}} className="dropdown-item" >Info</a>
 			</span>
 			</span>
 		);

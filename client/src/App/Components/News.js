@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import UploadImage from './UploadImage'
 import {FormGroup, ControlLabel, FormControl, Grid, Row, Col} from 'react-bootstrap';
 
-class Event extends Component {
+class News extends Component {
 	render() {
 		let currentDate = new Date();
 		return (
@@ -11,7 +11,7 @@ class Event extends Component {
 					<Row className="show-grid">
 					<Col xs={1} md={2}></Col>
 					<Col xs={10} md={8}>
-						<h3>Event</h3>
+						<h3>News</h3>
 						<br/>
 						<br/>
 						<FormGroup controlId="eventTitle">
@@ -43,4 +43,4 @@ class Event extends Component {
 	}
 }
 
-export default Event;
+export default News;
