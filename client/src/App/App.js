@@ -34,6 +34,7 @@ class App extends Component {
 				header: 'news',
 				imageUploader: true,
 				fields: ['title', 'description', 'date']
+
 			}
 		} else if (this.state.form === 'info') {
 			formAttributes = {
@@ -45,7 +46,7 @@ class App extends Component {
 		return (
 			<div className="app">
 				<Header formHandler={this.formHandler}/>
-				<Form formAttributes={formAttributes}/>
+				<Form formAttributes={formAttributes}/>	
 			</div>
 		);
 	}

@@ -11,7 +11,7 @@ class Form extends Component {
             uploadImageForm = <UploadImage/>;
         }
         let formElements = this.props.formAttributes.fields.map(a =>
-            <TextField 
+            <TextField
                 key={header.concat(this.capitalizeFirstLetter(a))}
                 id={this.props.formAttributes.header.concat(this.capitalizeFirstLetter(a))}
                 title={this.capitalizeFirstLetter(a)}
@@ -36,7 +36,7 @@ class Form extends Component {
 			</div>
 		)
     }
-    
+
     capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
