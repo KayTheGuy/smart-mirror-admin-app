@@ -27,7 +27,7 @@ class UploadImage extends React.Component {
                 label={`
                   Max Image Size:
                   ${Math.floor(imageSize/1000000)} MB
-                  | Image Type ${imageExts.join(", ")}
+                  | Image Types: ${imageExts.join(", ")}
                 `}
             />
         );
