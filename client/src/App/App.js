@@ -4,22 +4,22 @@ import Form from './Components/Form';
 
 class App extends Component {
 	state = {
-		response: '',
+		formDefaults: null,
 		form: ''
 	};
 
 	componentDidMount = () => {
 		// this.callApi();
 	}
-
-	formHandler = (formType) => {
-		this.setState({form: formType});
+	
+	formSelectHandler = (formType) => {
+		this.setState({form: formType, formDefaults: null});
 	}
 
 	callApi = async () => {
 		fetch('forms/type')
 		.then(response => { return response.json(); })
-		.then(myJson => { this.setState({ response: myJson[0]._id}); })
+		.then(myJson => { this.setState({ formDefaults: myJson[0]});})
 		.catch(err => { console.log(err); });
 	}
 
@@ -27,24 +27,27 @@ class App extends Component {
 		let formAttributes = {
 			header: 'event',
 			imageUploader: true,
-			fields: ['title', 'description', 'location', 'date']
+			fields: ['title', 'description', 'location', 'date'],
+			formDefaults: this.state.formDefaults
 		}
 		if (this.state.form === 'news') {
 			formAttributes = {
 				header: 'news',
 				imageUploader: true,
-				fields: ['title', 'description', 'date']
+				fields: ['title', 'description', 'date'],
+				formDefaults: this.state.formDefaults
 			}
 		} else if (this.state.form === 'info') {
 			formAttributes = {
 				header: 'info',
 				imageUploader: false,
-				fields: ['title', 'description']
+				fields: ['title', 'description'],
+				formDefaults: this.state.formDefaults
 			}
 		}
 		return (
 			<div className="app">
-				<Header formHandler={this.formHandler}/>
+				<Header formSelectHandler={this.formSelectHandler}/>
 				<Form formAttributes={formAttributes}/>
 			</div>
 		);

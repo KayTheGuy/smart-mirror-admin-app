@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { } from 'react-bootstrap';
 
 class Selector extends Component  {
-	
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,8 +19,8 @@ class Selector extends Component  {
 		var node;
 		while(node === nodeIterator.nextNode()) {
 			if (node === target) {
-			dropdownHasFocus = true;
-			break;
+				dropdownHasFocus = true;
+				break;
 			}
 		}
 		return dropdownHasFocus;
@@ -48,9 +48,9 @@ class Selector extends Component  {
 			<span
 				className="dropdown-menu"
 				aria-labelledby="dropDownMenuButton">
-				<a onClick={() => {this.props.formHandler('news')}} className="dropdown-item" >News</a>
-				<a onClick={() => {this.props.formHandler()}} className="dropdown-item" >Event</a>
-				<a onClick={() => {this.props.formHandler('info')}} className="dropdown-item" >Info</a>
+				<a onClick={() => {this.props.formSelectHandler('news')}} className="dropdown-item" >News</a>
+				<a onClick={() => {this.props.formSelectHandler()}} className="dropdown-item" >Event</a>
+				<a onClick={() => {this.props.formSelectHandler('info')}} className="dropdown-item" >Info</a>
 			</span>
 			</span>
 		);
