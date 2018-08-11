@@ -4,8 +4,8 @@ const formType = require('../../model/form-type').forms;
 const dbName = require('../../model/form-type').dbName;
 
 function writeTest() {
-	db.writeObject(dbName, formType.EVENTS, {"_id":"5b6356c25dc3170474db25fd","db_test":1})
-	.then( (data) => {
+  db.writeObject(dbName, formType.EVENTS, {"_id":"5b6356c25dc3170474db25fd","db_test":1})
+		.then( (data) => {
 	assert.equal(data, 200, "writeObject failed for one object");
 	db.writeObject(dbName, formType.EVENTS, [{"_id":"5b6356c25dc3170474db25fe","db_test":2}, {"_id":"5b6356c25dc3170474db25ff","db_test":3}])
 		.then( (data) => { assert.equal(data, 200, "writeObject failed for multiple objects ")})

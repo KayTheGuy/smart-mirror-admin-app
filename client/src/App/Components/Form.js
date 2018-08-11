@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import UploadImage from './UploadImage';
 import TextField from './TextField';
+import DatePicker from './DatePicker/DatePicker';
 import {Grid, Row, Col} from 'react-bootstrap';
 
 class Form extends Component {
@@ -26,9 +27,13 @@ class Form extends Component {
 		let input = this.props.formAttributes;
 		let defaults = this.props.formAttributes.formDefaults;
 		let header = this.capitalizeFirstLetter(input.header);
-		let uploadImageForm = <span></span>;
+		let imgUploader = <span></span>;
+		let datePicker = <span></span>;
 		if (this.props.formAttributes.imageUploader) {
-			uploadImageForm = <UploadImage/>;
+			imgUploader = <UploadImage/>;
+		}
+		if (this.props.formAttributes.datePicker) {
+			datePicker = <div>Date<br/><DatePicker/></div>;
 		}
 		let formElements = input.fields.map(a =>
 			<TextField 
@@ -50,7 +55,8 @@ class Form extends Component {
 						<br/><br/>
 						<form onSubmit={this.handleSubmit}>
 							{formElements}
-							{uploadImageForm}
+							{datePicker}
+							{imgUploader}
 							<div className="submit-div">
 								<button 
 									type="submit"

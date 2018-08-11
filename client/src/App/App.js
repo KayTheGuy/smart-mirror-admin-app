@@ -27,20 +27,23 @@ class App extends Component {
 		let formAttributes = {
 			header: 'event',
 			imageUploader: true,
-			fields: ['title', 'description', 'location', 'date'],
+			datePicker: true,
+			fields: ['title', 'description', 'location'],
 			formDefaults: this.state.formDefaults
 		}
 		if (this.state.form === 'news') {
 			formAttributes = {
 				header: 'news',
 				imageUploader: true,
-				fields: ['title', 'description', 'date'],
+				datePicker: true,
+				fields: ['title', 'description'],
 				formDefaults: this.state.formDefaults
 			}
 		} else if (this.state.form === 'info') {
 			formAttributes = {
 				header: 'info',
 				imageUploader: false,
+				datePicker: false,
 				fields: ['title', 'description'],
 				formDefaults: this.state.formDefaults
 			}
