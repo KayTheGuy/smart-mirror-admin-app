@@ -1,24 +1,31 @@
 {
-  "name": "smart_mirror_admin_app",
+  "name": "smart-mirror-admin-app",
   "version": "1.0.0",
   "description": "Admin app for Dshop News, Events, etc.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "client": "cd client && npm start",
+    "start": "concurrently \"node server.js\" \"npm run client\"",
+    "install-all": "npm install && cd client && npm install"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kayhandehghani/smart_mirror_admin_app.git"
+    "url": "git+https://github.com/kayhandehghani/smart-mirror-admin-app.git"
   },
   "author": "Kayhan Dehghani",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kayhandehghani/smart_mirror_admin_app/issues"
+    "url": "https://github.com/kayhandehghani/smart-mirror-admin-app/issues"
   },
-  "homepage": "https://github.com/kayhandehghani/smart_mirror_admin_app#readme",
+  "homepage": "https://github.com/kayhandehghani/smart-mirror-admin-app#readme",
   "dependencies": {
     "assert": "^1.4.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
     "mongodb": "^3.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.1",
+    "nodemon": "^1.18.3"
   }
 }
