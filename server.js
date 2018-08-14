@@ -6,7 +6,7 @@ const dbName = require('./model/form-type').dbName;
 const app = express();
 const PORT = 5000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/forms/type', (req, res) => {
@@ -20,9 +20,11 @@ app.get('/forms/type', (req, res) => {
 	});
 });
 
-app.post('/events/', function (req, res) {
-	console.log(req.body);
-	res.status(200).send();
+app.post('/form/:type', function (req, res) {
+	if (req.body) {
+		db.writeObject(dbName, req.params.type, req.body);
+	}
+	res.status(200).json({'a': 12});
 });
 
 app.listen(PORT, () => {

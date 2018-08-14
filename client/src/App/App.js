@@ -9,22 +9,32 @@ class App extends Component {
 	};
 
 	componentDidMount = () => {
-		// this.callApi();
 	}
-	
+
 	formSelectHandler = (formType) => {
 		this.setState({form: formType, formDefaults: null});
 	}
 
-	callApi = async () => {
+	getForms = async () => {
 		fetch('forms/type')
 		.then(response => { return response.json(); })
 		.then(myJson => { this.setState({ formDefaults: myJson[0]});})
 		.catch(err => { console.log(err); });
 	}
 
+	postForm = async (formType, payload) => {
+		fetch(`form/${formType}`, {
+			method: 'POST',
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload)
+		})
+		.then(response => {})
+		.catch(err => { console.log(err); });
+	}
+
 	render = () => {
 		let formAttributes = {
+			type: 'events',
 			header: 'event',
 			imageUploader: true,
 			datePicker: true,
@@ -33,6 +43,7 @@ class App extends Component {
 		}
 		if (this.state.form === 'news') {
 			formAttributes = {
+				type: 'news',
 				header: 'news',
 				imageUploader: true,
 				datePicker: true,
@@ -41,6 +52,7 @@ class App extends Component {
 			}
 		} else if (this.state.form === 'info') {
 			formAttributes = {
+				type: 'info',
 				header: 'info',
 				imageUploader: false,
 				datePicker: false,
@@ -51,7 +63,7 @@ class App extends Component {
 		return (
 			<div className="app">
 				<Header formSelectHandler={this.formSelectHandler}/>
-				<Form formAttributes={formAttributes}/>
+				<Form formAttributes={formAttributes} postHandler={this.postForm}/>
 			</div>
 		);
 	}

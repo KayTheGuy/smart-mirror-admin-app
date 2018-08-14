@@ -1,7 +1,7 @@
 const forms = {
-	EVENTS: "EVENTS",
-	NEWS: "NEWS",
-	INFO: "INFO"
+	EVENTS: "events",
+	NEWS: "news",
+	INFO: "info"
 }
 
 const dbName = "DShop";
