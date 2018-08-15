@@ -51,7 +51,7 @@ class Selector extends Component  {
 		let items = [];
 		for (let key in this.state.itemsShow) {
 			if (this.state.itemsShow[key]) {
-			items.push(<a onClick={() => {this.handleSelection(key)}} className="dropdown-item" >{key}</a>);
+			items.push(<a key={key} onClick={() => {this.handleSelection(key)}} className="dropdown-item" >{key}</a>);
 			}
 		}
 
