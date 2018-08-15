@@ -63,10 +63,11 @@ class Form extends Component {
 		}
 		let formElements = input.fields.map(a =>
 			<TextField 
-				key={header.concat(this.capitalizeFirstLetter(a))}
-				id={input.header.concat(this.capitalizeFirstLetter(a))}
-				title={this.capitalizeFirstLetter(a)}
-				txt={a}
+				key={header.concat(this.capitalizeFirstLetter(a.name))}
+				id={input.header.concat(this.capitalizeFirstLetter(a.name))}
+				title={this.capitalizeFirstLetter(a.name)}
+				txt={a.name}
+				rows={a.rows}
 				default={defaults ? defaults[a] : null}
 				onChangeHandler={this.inputChangeHandler}
 			/>
@@ -78,7 +79,6 @@ class Form extends Component {
 					<Col xs={1} md={2}></Col>
 					<Col xs={10} md={8}>
 						<h3>{header}</h3>
-						<br/><br/>
 						<form onSubmit={this.handleSubmit}>
 							{formElements}
 							{datePicker}
