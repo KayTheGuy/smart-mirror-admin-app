@@ -6,7 +6,13 @@ class Selector extends Component  {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: false
+			show: false,
+			selected: 'Event',
+			itemsShow: {
+				'Event': false,
+				'Info': true,
+				'News': true,
+			}
 		};
 	}
 
@@ -32,7 +38,23 @@ class Selector extends Component  {
 		});
 	}
 
+	handleSelection = (selected) => {
+		let previousSelected = this.state.selected;
+		let tmp = this.state.itemsShow;
+		tmp[previousSelected] = true;
+		tmp[selected] = false;
+		this.setState({selected: selected, itemsShow: tmp});
+		this.props.formSelectHandler(selected);
+	}
+
 	render = () => {
+		let items = [];
+		for (let key in this.state.itemsShow) {
+			if (this.state.itemsShow[key]) {
+			items.push(<a onClick={() => {this.handleSelection(key)}} className="dropdown-item" >{key}</a>);
+			}
+		}
+
 		return (
 			<span className={`dropdown ${this.state.show ? 'show' : ''}`} ref={(dropdown) => this.dropdown = dropdown}>
 			<button
@@ -43,14 +65,12 @@ class Selector extends Component  {
 				aria-haspopup="true"
 				aria-expanded={this.state.show}
 				onClick={this.toggleDropdown}>
-				Select Form
+				{this.state.selected}
 			</button>
 			<span
 				className="dropdown-menu"
 				aria-labelledby="dropDownMenuButton">
-				<a onClick={() => {this.props.formSelectHandler('news')}} className="dropdown-item" >News</a>
-				<a onClick={() => {this.props.formSelectHandler()}} className="dropdown-item" >Event</a>
-				<a onClick={() => {this.props.formSelectHandler('info')}} className="dropdown-item" >Info</a>
+				{items}
 			</span>
 			</span>
 		);

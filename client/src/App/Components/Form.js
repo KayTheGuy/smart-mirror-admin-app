@@ -51,7 +51,7 @@ class Form extends Component {
 		if (this.props.formAttributes.datePicker) {
 			datePicker = (
 				<div>
-					Date<br/>
+					<label>Date</label><br/>
 					<DateTime
 						id={"date-input"}
 						dateFormat="MMMM Do YYYY"
@@ -78,7 +78,6 @@ class Form extends Component {
 					<Row className="show-grid">
 					<Col xs={1} md={2}></Col>
 					<Col xs={10} md={8}>
-						<h3>{header}</h3>
 						<form onSubmit={this.handleSubmit}>
 							{formElements}
 							{datePicker}
