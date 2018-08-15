@@ -41,7 +41,7 @@ class App extends Component {
 			fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}, {name: 'location', rows: 1}],
 			formDefaults: this.state.formDefaults
 		}
-		if (this.state.form === 'news') {
+		if (this.state.form === 'News') {
 			formAttributes = {
 				type: 'news',
 				header: 'news',
@@ -50,7 +50,7 @@ class App extends Component {
 				fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}],
 				formDefaults: this.state.formDefaults
 			}
-		} else if (this.state.form === 'info') {
+		} else if (this.state.form === 'Info') {
 			formAttributes = {
 				type: 'info',
 				header: 'info',
