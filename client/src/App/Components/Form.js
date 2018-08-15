@@ -2,7 +2,8 @@ import moment from 'moment';
 import React, {Component} from 'react';
 import UploadImage from './UploadImage';
 import TextField from './TextField';
-import DatePicker from 'react-datepicker';
+import DateTime from 'react-datetime';
+import './DateTime.css';
 import {Grid, Row, Col} from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -11,7 +12,7 @@ class Form extends Component {
 		super(props);
 		this.state = {
 				formDict: {
-					'date': new moment().format('MMMM Do YYYY, h:mm:ss a')
+					'date': new moment().format('MMMM Do YYYY h:mm A')
 				}
 		}
 	}
@@ -31,7 +32,7 @@ class Form extends Component {
 
 	handleDateChange = moment => {
 		if (moment) {
-			let selectedDate = moment.format('MMMM Do YYYY, h:mm:ss a');
+			let selectedDate = moment.format('MMMM Do YYYY h:mm A');
 			let tmp = this.state.formDict;
 			tmp['date'] = selectedDate;
 			this.setState({formDict: tmp});
@@ -51,16 +52,11 @@ class Form extends Component {
 			datePicker = (
 				<div>
 					Date<br/>
-					<DatePicker
-						showTimeSelect
-						timeFormat="HH:mm"
-						timeIntervals={15}
+					<DateTime
 						id={"date-input"}
-						value={this.state.formDict['date']}
-						dateFormat="YYYY-MM-DD HH:mm" 
-						selected={this.state.date}
+						dateFormat="MMMM Do YYYY"
+						defaultValue={this.state.formDict['date']}
 						onChange={this.handleDateChange}
-						onSelect={this.handleDateChange}
 					/>
 				</div>
 			);
