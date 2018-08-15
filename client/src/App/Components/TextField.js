@@ -16,7 +16,8 @@ class TextField extends Component {
 			<FormGroup controlId={this.props.id}>
 			<ControlLabel>{this.props.title}</ControlLabel>
 			<FormControl 
-				componentClass="textarea" 
+				componentClass="textarea"
+				rows={this.props.rows}  
 				placeholder={fieldVal} 
 				onChange={this.handleChange}    
 			/>

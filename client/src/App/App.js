@@ -38,7 +38,7 @@ class App extends Component {
 			header: 'event',
 			imageUploader: true,
 			datePicker: true,
-			fields: ['title', 'description', 'location'],
+			fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}, {name: 'location', rows: 1}],
 			formDefaults: this.state.formDefaults
 		}
 		if (this.state.form === 'news') {
@@ -47,7 +47,7 @@ class App extends Component {
 				header: 'news',
 				imageUploader: true,
 				datePicker: true,
-				fields: ['title', 'description'],
+				fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}],
 				formDefaults: this.state.formDefaults
 			}
 		} else if (this.state.form === 'info') {
@@ -56,7 +56,7 @@ class App extends Component {
 				header: 'info',
 				imageUploader: false,
 				datePicker: false,
-				fields: ['title', 'description'],
+				fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}],
 				formDefaults: this.state.formDefaults
 			}
 		}
