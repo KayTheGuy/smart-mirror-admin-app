@@ -18,18 +18,20 @@ class App extends Component {
 	getForms = async () => {
 		fetch('forms/type')
 		.then(response => { return response.json(); })
-		.then(myJson => { this.setState({ formDefaults: myJson[0]});})
+		.then(myJson => { this.setState({ formDefaults: myJson[0]}); })
 		.catch(err => { console.log(err); });
 	}
 
-	postForm = async (formType, payload) => {
+	postForm = async (formType, body, files) => {
+		var data = new FormData()
+		data.append('body', body);
+		files.forEach(f => { data.append('files', f);});
 		fetch(`form/${formType}`, {
-			method: 'POST',
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(payload)
+			method: "POST",
+			body: data
 		})
 		.then(response => {})
-		.catch(err => { console.log(err); });
+		.catch(err => { console.log(err);});
 	}
 
 	render = () => {

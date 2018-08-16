@@ -11,31 +11,59 @@ class Form extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				formDict: {
-					'date': new moment().format('MMMM Do YYYY h:mm A')
-				}
+			'fileIds': [],
+			'files': [],
+			formDict: {
+				'date': new moment().format('MMMM Do YYYY h:mm A')
+			},
+			'formDateErr': false
 		}
 	}
 
 	handleSubmit = (e) => {
-		this.props.postHandler(this.props.formAttributes.type, this.state.formDict);
+		this.props.postHandler(this.props.formAttributes.type, this.state.formDict, this.state.files);
 	}
 
 	inputChangeHandler = (key, val) => {
 		let tmp = this.state.formDict;
 		tmp[key] = val;
 		if (!this.props.formAttributes.datePicker) {
-			delete tmp['date'];
+			delete tmp.date;
 		}
 		this.setState({formDict: tmp});
 	}
 
-	handleDateChange = moment => {
-		if (moment) {
-			let selectedDate = moment.format('MMMM Do YYYY h:mm A');
+	handleDateChange = inputMoment => {
+		if (inputMoment) {
 			let tmp = this.state.formDict;
-			tmp['date'] = selectedDate;
+			try {
+				tmp.date = inputMoment.format('MMMM Do YYYY h:mm A');
+				this.setState({formDateErr: false});
+			} catch (error) {
+				// invalid input => replace it with new moment
+				tmp.date = new moment().format('MMMM Do YYYY h:mm A');
+				this.setState({formDateErr: true});
+			}
+
 			this.setState({formDict: tmp});
+		}
+	}
+
+	handleImages = (files, images) => {
+		for (var i = 0; i < files.length; i++) {
+			this.handleImage(files[i], images[i]);
+		}
+	}
+
+	handleImage = (file, image) => {
+		// to avoid duplicate uploads from UploadImage use filename+size as a unique id
+		let fileId = file.name + file.size;
+		if (!this.state.fileIds.includes(fileId)) {
+			let prevFiles = this.state.files;
+			let prevFileIds = this.state.fileIds;
+			prevFileIds.push(fileId);
+			prevFiles.push(file);
+			this.setState({fileIds: prevFileIds, files: prevFiles});
 		}
 	}
 
@@ -46,7 +74,7 @@ class Form extends Component {
 		let imgUploader = <span></span>;
 		let datePicker = <span></span>;
 		if (this.props.formAttributes.imageUploader) {
-			imgUploader = <UploadImage/>;
+			imgUploader = <UploadImage uploadHandler={this.handleImages}/>;
 		}
 		if (this.props.formAttributes.datePicker) {
 			datePicker = (
@@ -55,7 +83,7 @@ class Form extends Component {
 					<DateTime
 						id={"date-input"}
 						dateFormat="MMMM Do YYYY"
-						defaultValue={this.state.formDict['date']}
+						defaultValue={this.state.formDict.date}
 						onChange={this.handleDateChange}
 					/>
 				</div>
