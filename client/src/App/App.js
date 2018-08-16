@@ -25,7 +25,8 @@ class App extends Component {
 	postForm = async (formType, body, files) => {
 		var data = new FormData()
 		data.append('body', body);
-		files.forEach(f => { data.append('files', f);});
+		files.forEach(f => { data.append('files', f, f.name); });
+		alert(files.length)
 		fetch(`form/${formType}`, {
 			method: "POST",
 			body: data
