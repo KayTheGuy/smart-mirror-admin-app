@@ -49,13 +49,11 @@ class Form extends Component {
 		}
 	}
 
-	handleImages = (files, images) => {
-		for (var i = 0; i < files.length; i++) {
-			this.handleImage(files[i], images[i]);
-		}
+	handleImages = files => {
+		files.forEach(f => this.handleImage(f));
 	}
 
-	handleImage = (file, image) => {
+	handleImage = file => {
 		// to avoid duplicate uploads from UploadImage use filename+size as a unique id
 		let fileId = file.name + file.size;
 		if (!this.state.fileIds.includes(fileId)) {
