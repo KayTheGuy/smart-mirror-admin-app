@@ -15,8 +15,8 @@ class App extends Component {
 		this.setState({form: formType, formDefaults: null});
 	}
 
-	getForms = async () => {
-		fetch('forms/type')
+	getForms = async (formType) => {
+		fetch(`forms/${formType}`)
 		.then(response => { return response.json(); })
 		.then(myJson => { this.setState({ formDefaults: myJson[0]}); })
 		.catch(err => { console.log(err); });

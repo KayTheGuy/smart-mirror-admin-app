@@ -40,11 +40,30 @@ var upload = multer({
 	storage: storage,        
 }).array('files', 5);
 
-app.get('/forms/type', (req, res) => {
-	res.setHeader('Content-Type', 'application/json');
-	db.readAll(dbName, formType.EVENTS)
-	.then((data) => {
-		res.status(200).json(data);
+app.get(`/${IMAGES_FOLDER}/:formType/:timestamp/:filename`, (req, res) => {
+	let imgRelPath = '/' + req.params.formType + '/' + req.params.timestamp + '/' + req.params.filename;
+	res.sendFile(path.join(__dirname, IMAGES_FOLDER, imgRelPath));
+}); 
+
+app.get('/forms/:type', (req, res) => {
+	db.readAll(dbName, req.params.type)
+	.then(entries => {
+		result = [];
+		entries.forEach(entry => {
+			if (entry.imagesPath) {
+				entry.imagePaths = [];
+				console.log(entry.imagesPath);
+				try {
+					fs.readdirSync(entry.imagesPath).forEach(filename => {
+						entry.imagePaths.push(entry.imagesPath + '/' + filename);
+					});
+				} catch (error) {
+					console.log(`Unable to read the files from dir: ${entry.imagesPath}`);
+				}
+			} 
+			result.push(entry);
+		});
+		res.status(200).json(result);
 	})
 	.catch((err) => {
 		console.log(err);
@@ -56,11 +75,11 @@ app.post('/form/:type/:timestamp', function (req, res) {
 	upload(req, res, function(err) {
 		// add destination of first file to db if any
 		if (req.files.length > 0) {
-			req.body.images_path = req.files[0].destination;
-			db.writeObject(dbName, req.params.type, req.body)
-			.then(status => res.status(status).send())
-			.catch(() => console.log(`Failed to post form of type ${req.param.type}`))
+			req.body.imagesPath = req.files[0].destination;
 		}
+		db.writeObject(dbName, req.params.type, req.body)
+		.then(status => res.status(status).send())
+		.catch(() => console.log(`Failed to post form of type ${req.param.type}`))
 		if(err) {
 			res.status(500).send();
 		}
