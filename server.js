@@ -1,29 +1,30 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const multer = require('multer');
 const fs = require('fs');
-const shell = require('shelljs');
 const path = require('path');
 const db = require('./db/db');
-const formType = require('./model/form-type').forms;
+const multer = require('multer');
+const shell = require('shelljs');
+const express = require('express');
+const bodyParser = require('body-parser');
 const dbName = require('./model/form-type').dbName;
-const app = express();
+const formType = require('./model/form-type').forms;
+
 const PORT = 5000;
 const IMAGES_FOLDER = 'images';
 
+const app = express();
 app.use(bodyParser.json({limit: '150mb', extended: true}));
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-		var newDestination = path.join(IMAGES_FOLDER, req.params.type, Date.now().toString());
-		var stat = null;
+	destination: function (req, file, cb) {
+		let newDestination = path.join(IMAGES_FOLDER, req.params.type, req.params.timestamp);
+		let stat = null;
 		try {
-				stat = fs.statSync(newDestination);
+			stat = fs.statSync(newDestination);
 		} catch (err) {
-				shell.mkdir('-p', newDestination);
+			shell.mkdir('-p', newDestination);
 		}
 		if (stat && !stat.isDirectory()) {
-				throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
+			throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
 		}       
 		cb(null, newDestination);
   },
@@ -33,13 +34,11 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ 
-	dest: IMAGES_FOLDER,
 	limits: {
-		fieldNameSize: 100,
 		fileSize: 60000000
 	}, 
 	storage: storage,        
-});
+}).array('files', 5);
 
 app.get('/forms/type', (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
@@ -53,12 +52,19 @@ app.get('/forms/type', (req, res) => {
 	});
 });
 
-app.post('/form/:type', upload.array('files', 12), function (req, res) {
-	// console.log(req.body);
-	// console.log(req.files);
-	// db.writeObject(dbName, req.params.type, req.body)
-	// .then(status => res.status(status).send())
-	// .catch(() => console.log(`Failed to post form of type ${req.param.type}`))
+app.post('/form/:type/:timestamp', function (req, res) {
+	upload(req, res, function(err) {
+		// add destination of first file to db if any
+		if (req.files.length > 0) {
+			req.body.images_path = req.files[0].destination;
+			db.writeObject(dbName, req.params.type, req.body)
+			.then(status => res.status(status).send())
+			.catch(() => console.log(`Failed to post form of type ${req.param.type}`))
+		}
+		if(err) {
+			res.status(500).send();
+		}
+	});
 });
 
 app.listen(PORT, () => {

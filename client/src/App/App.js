@@ -24,15 +24,14 @@ class App extends Component {
 
 	postForm = async (formType, body, files) => {
 		var data = new FormData()
-		data.append('body', body);
+		data.append('formFields', JSON.stringify(body));
 		files.forEach(f => { data.append('files', f, f.name); });
-		alert(files.length)
-		fetch(`form/${formType}`, {
+		fetch(`form/${formType}/${Date.now().toString()}`, {
 			method: "POST",
 			body: data
 		})
-		.then(response => {})
-		.catch(err => { console.log(err);});
+		.then(response => {alert(response.status)})
+		.catch(err => { alert(err)});
 	}
 
 	render = () => {
