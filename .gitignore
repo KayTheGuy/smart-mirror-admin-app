@@ -1,5 +1,6 @@
 uploads/*
 images/*
+.vscode/*
 
 .idea*
 *package-lock.json
