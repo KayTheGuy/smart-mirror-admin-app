@@ -16,22 +16,29 @@ class App extends Component {
 	}
 
 	getForms = async (formType) => {
-		fetch(`forms/${formType}`)
+		fetch(`/forms/${formType}`)
 		.then(response => { return response.json(); })
 		.then(myJson => { this.setState({ formDefaults: myJson[0]}); })
 		.catch(err => { console.log(err); });
 	}
-
-	postForm = async (formType, body, files) => {
-		var data = new FormData()
-		data.append('formFields', JSON.stringify(body));
-		files.forEach(f => { data.append('files', f, f.name); });
-		fetch(`form/${formType}/${Date.now().toString()}`, {
+	
+	postData = (url, data) => {
+		fetch(url, {
 			method: "POST",
 			body: data
 		})
 		.then(response => {alert(response.status)})
-		.catch(err => { alert(err)});
+		.catch(err => { alert(err);});
+	 }
+
+	 makeForm = (formType, body, files) => {
+		var data = new FormData();
+		data.append('formFields', JSON.stringify(body));
+		for (var i in files) {
+			data.append('files', files[i], files[i].name);
+		}
+		var url = `/form/${formType}/${Date.now().toString()}`;
+		this.postData(url, data);
 	}
 
 	render = () => {
@@ -65,7 +72,7 @@ class App extends Component {
 		return (
 			<div className="app">
 				<Header formSelectHandler={this.formSelectHandler}/>
-				<Form formAttributes={formAttributes} postHandler={this.postForm}/>
+				<Form formAttributes={formAttributes} postHandler={this.makeForm}/>
 			</div>
 		);
 	}
