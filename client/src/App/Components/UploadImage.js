@@ -6,8 +6,8 @@ class UploadImage extends React.Component {
 		let imageSize = 52428800;
 		let imageExts = ['.jpg', '.gif', '.png', '.gif'];
 		let style = {
-				'backgroundColor': 'black',
-				'color': '#eba023',
+			'backgroundColor': '#495057',
+			'color': '#F8F8F8'
 		}
 		return (
 			<ImageUploader

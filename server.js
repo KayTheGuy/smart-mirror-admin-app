@@ -1,4 +1,5 @@
 const fs = require('fs');
+const cors = require('cors');
 const path = require('path');
 const db = require('./db/db');
 const multer = require('multer');
@@ -6,13 +7,14 @@ const shell = require('shelljs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const dbName = require('./model/form-type').dbName;
-const formType = require('./model/form-type').forms;
 
 const PORT = 5000;
 const IMAGES_FOLDER = 'images';
 
 const app = express();
-app.use(bodyParser.json({limit: '150mb', extended: true}));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -52,7 +54,6 @@ app.get('/forms/:type', (req, res) => {
 		entries.forEach(entry => {
 			if (entry.imagesPath) {
 				entry.imagePaths = [];
-				console.log(entry.imagesPath);
 				try {
 					fs.readdirSync(entry.imagesPath).forEach(filename => {
 						entry.imagePaths.push(entry.imagesPath + '/' + filename);
@@ -71,9 +72,9 @@ app.get('/forms/:type', (req, res) => {
 	});
 });
 
-app.post('/form/:type/:timestamp', function (req, res) {
+app.post('/form/:type/:timestamp', (req, res) => {
 	upload(req, res, function(err) {
-		// add destination of first file to db if any
+		// add destination of the first file to form, if any
 		if (req.files.length > 0) {
 			req.body.imagesPath = req.files[0].destination;
 		}
@@ -81,6 +82,7 @@ app.post('/form/:type/:timestamp', function (req, res) {
 		.then(status => res.status(status).send())
 		.catch(() => console.log(`Failed to post form of type ${req.param.type}`))
 		if(err) {
+			console.log(err);
 			res.status(500).send();
 		}
 	});

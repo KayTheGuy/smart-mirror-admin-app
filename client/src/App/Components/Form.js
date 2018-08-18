@@ -44,7 +44,6 @@ class Form extends Component {
 				tmp.date = new moment().format('MMMM Do YYYY h:mm A');
 				this.setState({formDateErr: true});
 			}
-
 			this.setState({formDict: tmp});
 		}
 	}
@@ -71,19 +70,37 @@ class Form extends Component {
 		let header = this.capitalizeFirstLetter(input.header);
 		let imgUploader = <span></span>;
 		let datePicker = <span></span>;
+		let datePickerAndImageUploader = <span></span>;
+		let datePickerAndImageUploaderLabel = '';
 		if (this.props.formAttributes.imageUploader) {
 			imgUploader = <UploadImage uploadHandler={this.handleImages}/>;
+			datePickerAndImageUploaderLabel = 'Images';
 		}
 		if (this.props.formAttributes.datePicker) {
-			datePicker = (
+			datePickerAndImageUploaderLabel = 'Date';
+			datePicker = <DateTime
+				input={false}
+				className={"date-input"}
+				dateFormat="MMMM Do YYYY"
+				defaultValue={this.state.formDict.date}
+				onChange={this.handleDateChange}
+			/>;
+		}
+		if (this.props.formAttributes.datePicker || this.props.formAttributes.imageUploader) {
+			if (this.props.formAttributes.datePicker && this.props.formAttributes.imageUploader) {
+				datePickerAndImageUploaderLabel = 'Date & Images';
+			}
+			datePickerAndImageUploader = (
 				<div>
-					<label>Date</label><br/>
-					<DateTime
-						id={"date-input"}
-						dateFormat="MMMM Do YYYY"
-						defaultValue={this.state.formDict.date}
-						onChange={this.handleDateChange}
-					/>
+					<label>{datePickerAndImageUploaderLabel}</label><br/>
+					<div id="datepicker-div">
+						<Grid>
+						<Row className="show-grid">
+						<Col xs={6} md={6}>{datePicker}</Col>
+						<Col xs={6} md={6}>{imgUploader}</Col>
+						</Row>
+						</Grid>
+					</div>
 				</div>
 			);
 		}
@@ -102,23 +119,22 @@ class Form extends Component {
 			<div className="content">
 				<Grid>
 					<Row className="show-grid">
-					<Col xs={1} md={2}></Col>
-					<Col xs={10} md={8}>
+					<Col xs={1} md={1}></Col>
+					<Col xs={10} md={10}>
 						<form onSubmit={this.handleSubmit}>
 							{formElements}
-							{datePicker}
-							{imgUploader}
+							{datePickerAndImageUploader}
 							<div className="submit-div">
 								<button 
-									type="submit"
 									className="form-buttons"
+									type="submit"
 								>
 								Submit
 								</button>
 							</div>
 						</form>
 					</Col>
-					<Col xs={1} md={2}></Col>
+					<Col xs={1} md={1}></Col>
 					</Row>
 				</Grid>
 			</div>
