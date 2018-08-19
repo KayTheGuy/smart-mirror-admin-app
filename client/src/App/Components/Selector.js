@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { } from 'react-bootstrap';
 
 class Selector extends Component  {
 

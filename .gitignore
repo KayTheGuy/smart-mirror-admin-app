@@ -3,7 +3,6 @@ images/*
 .vscode/*
 
 .idea*
-*package-lock.json
 *private_config.json
 
 # Logs
