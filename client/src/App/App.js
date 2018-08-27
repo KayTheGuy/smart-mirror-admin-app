@@ -27,13 +27,15 @@ class App extends Component {
 			method: "POST",
 			body: data
 		})
-		.then(response => {alert(response.status)})
-		.catch(err => { alert(err);});
-	 }
+		.then(response => {}) //TODO: show message
+		.catch(err => {});  //TODO: show error
+	}
 
 	 makeForm = (formType, body, files) => {
 		var data = new FormData();
-		data.append('formFields', JSON.stringify(body));
+		for (var key in body) {
+			data.append(key, body[key]);
+		}
 		for (var i in files) {
 			data.append('files', files[i], files[i].name);
 		}
