@@ -74,16 +74,25 @@ app.get('/forms/:type', (req, res) => {
 
 app.post('/form/:type/:timestamp', (req, res) => {
 	upload(req, res, function(err) {
+		let emptyFolder = false;
 		// add destination of the first file to form, if any
 		if (req.files.length > 0) {
 			req.body.imagesPath = req.files[0].destination;
 		}
 		db.writeObject(dbName, req.params.type, req.body)
 		.then(status => res.status(status).send())
-		.catch(() => console.log(`Failed to post form of type ${req.param.type}`))
+		.catch(() => {
+			console.log(`Failed to post form of type ${req.param.type}`);
+			res.status(503).send();
+			emptyFolder = true;
+		})
 		if(err) {
+			emptyFolder = true;
 			console.log(err);
 			res.status(500).send();
+		}
+		if (emptyFolder) {
+			fs.rmdir(path.join(IMAGES_FOLDER, req.params.type, req.params.timestamp));
 		}
 	});
 });
