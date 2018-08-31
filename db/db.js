@@ -22,7 +22,7 @@ var writeObject = function (dbName, collectionName, data) {
 	return new Promise((resolve, reject) => {
 		MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
 			const col = client.db(dbName).collection(collectionName);
-			col.insert(data, (err, doc) => {
+			col.insertOne(data, (err, doc) => {
 				if (err) {
 					console.log(`Failed to insert items for db: ${dbName}, collection: ${collectionName}\n${err}`);
 					reject();
