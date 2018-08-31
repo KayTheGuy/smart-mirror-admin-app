@@ -3,22 +3,11 @@ import Header from './Components/Header';
 import Form from './Components/Form';
 
 class App extends Component {
-	state = {
-		formDefaults: null,
-		form: ''
-	};
 
-	componentDidMount = () => {
-	}
-
-	formSelectHandler = (formType) => {
-		this.setState({form: formType, formDefaults: null});
-	}
-
-	getForms = async (formType) => {
-		fetch(`/forms/${formType}`)
+	getForms = async () => {
+		fetch("/forms")
 		.then(response => { return response.json(); })
-		.then(myJson => { this.setState({ formDefaults: myJson[0]}); })
+		.then(myJson => { })
 		.catch(err => { console.log(err); });
 	}
 	
@@ -39,7 +28,7 @@ class App extends Component {
 		for (var i in files) {
 			data.append('files', files[i], files[i].name);
 		}
-		var url = `/form/${formType}/${Date.now().toString()}`;
+		var url = `/form/${Date.now().toString()}`;
 		this.postData(url, data);
 	}
 
@@ -49,27 +38,7 @@ class App extends Component {
 			header: 'event',
 			imageUploader: true,
 			datePicker: true,
-			fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}, {name: 'location', rows: 1}],
-			formDefaults: this.state.formDefaults
-		}
-		if (this.state.form === 'News') {
-			formAttributes = {
-				type: 'news',
-				header: 'news',
-				imageUploader: true,
-				datePicker: true,
-				fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}],
-				formDefaults: this.state.formDefaults
-			}
-		} else if (this.state.form === 'Info') {
-			formAttributes = {
-				type: 'info',
-				header: 'info',
-				imageUploader: false,
-				datePicker: false,
-				fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}],
-				formDefaults: this.state.formDefaults
-			}
+			fields: [{name: 'title', rows:1}, {name: 'description', rows: 6}, {name: 'location', rows: 1}]
 		}
 		return (
 			<div className="app">

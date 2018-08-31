@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		let newDestination = path.join(IMAGES_FOLDER, req.params.type, req.params.timestamp);
+		let newDestination = path.join(IMAGES_FOLDER, req.params.timestamp);
 		let stat = null;
 		try {
 			stat = fs.statSync(newDestination);
@@ -42,13 +42,13 @@ var upload = multer({
 	storage: storage,        
 }).array('files', 5);
 
-app.get(`/${IMAGES_FOLDER}/:formType/:timestamp/:filename`, (req, res) => {
-	let imgRelPath = '/' + req.params.formType + '/' + req.params.timestamp + '/' + req.params.filename;
+app.get(`/${IMAGES_FOLDER}/:timestamp/:filename`, (req, res) => {
+	let imgRelPath = '/' + req.params.timestamp + '/' + req.params.filename;
 	res.sendFile(path.join(__dirname, IMAGES_FOLDER, imgRelPath));
 }); 
 
-app.get('/forms/:type', (req, res) => {
-	db.readAll(dbName, req.params.type)
+app.get('/forms', (req, res) => {
+	db.readAll(dbName, 'FORMS')
 	.then(entries => {
 		result = [];
 		entries.forEach(entry => {
@@ -72,27 +72,27 @@ app.get('/forms/:type', (req, res) => {
 	});
 });
 
-app.post('/form/:type/:timestamp', (req, res) => {
+app.post('/form/:timestamp', (req, res) => {
 	upload(req, res, function(err) {
 		let emptyFolder = false;
 		// add destination of the first file to form, if any
 		if (req.files.length > 0) {
 			req.body.imagesPath = req.files[0].destination;
 		}
-		db.writeObject(dbName, req.params.type, req.body)
+		db.writeObject(dbName, 'FORMS', req.body)
 		.then(status => res.status(status).send())
 		.catch(() => {
-			console.log(`Failed to post form of type ${req.param.type}`);
+			console.log("Failed to post form");
 			res.status(503).send();
 			emptyFolder = true;
 		})
-		if(err) {
+		if (err) {
 			emptyFolder = true;
 			console.log(err);
 			res.status(500).send();
 		}
 		if (emptyFolder) {
-			fs.rmdir(path.join(IMAGES_FOLDER, req.params.type, req.params.timestamp));
+			fs.rmdir(path.join(IMAGES_FOLDER, req.params.timestamp));
 		}
 	});
 });
