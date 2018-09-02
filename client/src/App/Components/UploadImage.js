@@ -4,7 +4,7 @@ import ImageUploader from 'react-images-upload';
 class UploadImage extends React.Component {
 	render = () => {
 		let imageSize = 52428800;
-		let imageExts = ['.jpg', '.gif', '.png', '.gif'];
+		let imageExts = ['.jpg', '.gif', '.png', '.svg'];
 		let style = {
 			'backgroundColor': '#495057',
 			'color': '#F8F8F8'

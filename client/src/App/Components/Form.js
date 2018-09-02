@@ -16,21 +16,29 @@ class Form extends Component {
 			formDict: {
 				'date': new moment().format('MMMM Do YYYY h:mm A')
 			},
-			'formDateErr': false
+			'formDateErr': false,
+			fieldsValidity: {}
 		}
 	}
 
 	handleSubmit = (e) => {
-		this.props.postHandler(this.props.formAttributes.type, this.state.formDict, this.state.files);
+		e.preventDefault();
+		let validForm = true;
+		for (let k in this.state.fieldsValidity){
+			if(!this.state.fieldsValidity[k]) validForm = false;
+		}
+		this.props.postHandler(this.props.formAttributes.type, this.state.formDict, this.state.files, validForm);
 	}
 
-	inputChangeHandler = (key, val) => {
+	inputChangeHandler = (key, val, isValid) => {
 		let tmp = this.state.formDict;
 		tmp[key] = val;
 		if (!this.props.formAttributes.datePicker) {
 			delete tmp.date;
 		}
-		this.setState({formDict: tmp});
+		let tmp2 = this.state.fieldsValidity;
+		tmp2[key] = isValid;
+		this.setState({formDict: tmp, fieldsValidity: tmp2});
 	}
 
 	handleDateChange = inputMoment => {
@@ -53,7 +61,9 @@ class Form extends Component {
 	}
 
 	handleImage = file => {
+		console.log(file);
 		// to avoid duplicate uploads from UploadImage use filename+size as a unique id
+		// TODO: square images max 800 by 800
 		let fileId = file.name + file.size;
 		if (!this.state.fileIds.includes(fileId)) {
 			let prevFiles = this.state.files;
@@ -105,7 +115,7 @@ class Form extends Component {
 			);
 		}
 		let formElements = input.fields.map(a =>
-			<TextField 
+			<TextField
 				key={header.concat(this.capitalizeFirstLetter(a.name))}
 				id={input.header.concat(this.capitalizeFirstLetter(a.name))}
 				title={this.capitalizeFirstLetter(a.name)}
@@ -125,7 +135,7 @@ class Form extends Component {
 							{formElements}
 							{datePickerAndImageUploader}
 							<div className="submit-div">
-								<button 
+								<button
 									className="form-buttons"
 									type="submit"
 								>
